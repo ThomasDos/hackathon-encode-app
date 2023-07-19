@@ -6,7 +6,9 @@ import { Chain } from 'wagmi'
 function contractWormholeInstance(chain: Chain) {
   const bridgeAddress =
     WORMHOLE_CONTRACT_ADDRESSES[chain.network as keyof typeof WORMHOLE_CONTRACT_ADDRESSES].bridgeAddress
-  const contract = new ethers.Contract(bridgeAddress, abiBridgeWormhole)
+  //@ts-ignore
+  const signer = new ethers.providers.Web3Provider(window.ethereum, 'any').getSigner()
+  const contract = new ethers.Contract(bridgeAddress, abiBridgeWormhole, signer)
 
   return contract
 }

@@ -1,22 +1,33 @@
-import abiBridgeWormhole from '@/constant/abi-bridge-wormhole'
-import WORMHOLE_CONTRACT_ADDRESSES from '@/constant/wormhole-contract-addresses'
-import { useContractWrite, useNetwork, usePrepareContractWrite } from 'wagmi'
+import finaliseAttestWormholeFromTargetChain from '@/services/wormhole/finalise-attest-wormhole-from-target-chain'
+import requestAttestWormhole from '@/services/wormhole/request-attest-wormhole'
+import { Chain } from 'wagmi'
 
-function useAttestToken() {
-  const tokenAddress = '0x7a9673cb6faeb696ac7b76f622c7933256e324d2'
+function useAttestToken(chain: Chain, switchNetwork: any) {
+  const tokenAddress = '0x3913117C28e721d94EB4aEaCFAc3F1b663caC6C0'
+  const targetChain = 'goerli'
 
-  const { chain } = useNetwork()
+  let vaaKey
 
-  const chainEnum = WORMHOLE_CONTRACT_ADDRESSES[chain?.network as keyof typeof WORMHOLE_CONTRACT_ADDRESSES]
-  const { config } = usePrepareContractWrite({
-    address: chainEnum?.bridgeAddress ?? '',
-    abi: abiBridgeWormhole,
-    functionName: 'attestToken',
-    args: [tokenAddress, 0]
-  })
-  const { data, isLoading, isSuccess, write, writeAsync } = useContractWrite(config)
+  async function attestToken() {
+    try {
+      console.log('BEFORE SWITCH')
+      if (!switchNetwork) return null
+      console.log('AFTER SWITCH')
+      const vaa = await requestAttestWormhole(chain as Chain, targetChain, tokenAddress)
 
-  return { data, isLoading, isSuccess, writeAsync, write }
+      console.log('vaa > ', vaa)
+
+      // switch network to goerli
+      // switchNetwork(goerli.id)
+
+      await finaliseAttestWormholeFromTargetChain('goerli', vaa)
+      vaaKey = vaa
+    } catch (error) {
+      console.log('error: ', error)
+    }
+  }
+
+  return { vaaKey, attestToken }
 }
 export default useAttestToken
 
