@@ -8,15 +8,14 @@ function useApproveTokens() {
   const { chain } = useNetwork()
 
   const chainEnum = WORMHOLE_CONTRACT_ADDRESSES[chain?.network as keyof typeof WORMHOLE_CONTRACT_ADDRESSES]
-  console.log('chainEnum: APPROVE TOKEN', chainEnum)
   const { config } = usePrepareContractWrite({
     address: tokenAddress,
     abi: abiERC20Token,
     functionName: 'approve',
     args: [chainEnum?.bridgeAddress, 10 * 10 ** 16]
   })
-  const { data, isLoading, isSuccess, writeAsync } = useContractWrite(config)
+  const { data, isLoading, isSuccess, writeAsync, write } = useContractWrite(config)
 
-  return { data, isLoading, isSuccess, writeAsync }
+  return { data, isLoading, isSuccess, writeAsync, write }
 }
 export default useApproveTokens
