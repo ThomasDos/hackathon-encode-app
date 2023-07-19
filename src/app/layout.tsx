@@ -3,6 +3,7 @@ import Navigation from '@/components/layout/navigation'
 import { config } from '@/services/connect-kit-client'
 import { ConnectKitProvider } from 'connectkit'
 import { Inter } from 'next/font/google'
+import { Toaster } from 'react-hot-toast'
 import { WagmiConfig } from 'wagmi'
 import './globals.css'
 
@@ -16,6 +17,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <body className={`${inter.className} min-h-screen`}>
             <Navigation />
             {children}
+            <Toaster />
           </body>
         </html>
       </ConnectKitProvider>
