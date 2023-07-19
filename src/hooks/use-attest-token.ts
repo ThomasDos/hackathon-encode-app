@@ -16,9 +16,6 @@ function useAttestToken(chain: Chain, switchNetwork: any) {
 
       console.log('vaa > ', vaa)
 
-      // switch network to goerli
-      // switchNetwork(goerli.id)
-
       await finaliseAttestWormholeFromTargetChain('goerli', vaa)
       vaaKey = vaa
     } catch (error) {

@@ -15,7 +15,7 @@ function useTransferToken() {
     address: chainEnum?.bridgeAddress ?? '',
     abi: abiBridgeWormhole,
     functionName: 'transferTokens',
-    args: [EH_ADDRESS, 10 * 10 ** 18, targetChainId, targetAddress, 1000000, 0]
+    args: [EH_ADDRESS, 10 * 10 ** 18, targetChainId, targetAddress, 10000000, 0]
   })
   const { data, isLoading, isSuccess, write, writeAsync } = useContractWrite(config)
 
