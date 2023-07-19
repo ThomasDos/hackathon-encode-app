@@ -1,19 +1,18 @@
+import { EH_ADDRESS } from '@/constant/token-ERC20-sepolia-address'
 import finaliseAttestWormholeFromTargetChain from '@/services/wormhole/finalise-attest-wormhole-from-target-chain'
 import requestAttestWormhole from '@/services/wormhole/request-attest-wormhole'
 import { Chain } from 'wagmi'
 
 function useAttestToken(chain: Chain, switchNetwork: any) {
-  const tokenAddress = '0x3913117C28e721d94EB4aEaCFAc3F1b663caC6C0'
   const targetChain = 'goerli'
 
   let vaaKey
 
   async function attestToken() {
     try {
-      console.log('BEFORE SWITCH')
       if (!switchNetwork) return null
-      console.log('AFTER SWITCH')
-      const vaa = await requestAttestWormhole(chain as Chain, targetChain, tokenAddress)
+
+      const vaa = await requestAttestWormhole(chain as Chain, targetChain, EH_ADDRESS)
 
       console.log('vaa > ', vaa)
 
