@@ -2,6 +2,7 @@
 
 import useApproveToken from '@/hooks/use-approve-token'
 import useTransferTokens from '@/hooks/use-transfer-tokens'
+import WormholeBridge, { WormholeConnectConfig } from '@wormhole-foundation/wormhole-connect'
 import { useNetwork } from 'wagmi'
 
 export default function Home() {
@@ -19,11 +20,21 @@ export default function Home() {
   console.log('isSuccess:', isSuccess)
   console.log('data:', data)
 
+  const config: WormholeConnectConfig = {
+    env: 'mainnet',
+    networks: ['ethereum', 'polygon', 'solana'],
+    tokens: ['ETH', 'WETH', 'MATIC', 'WMATIC'],
+    rpc: {
+      ethereum: 'https://rpc.ankr.com/eth',
+      solana: 'https://rpc.ankr.com/solana'
+    }
+  }
+
   const handleTransferTokens = async () => {
     if (!writeAsync || !writeAsyncApproveToken) return
-    await writeAsyncApproveToken()
-    console.log('End', isSuccessApproveToken)
-    if (!isSuccessApproveToken) return
+    // await writeAsyncApproveToken()
+    // console.log('End', isSuccessApproveToken)
+    // if (!isSuccessApproveToken) return
 
     const tx = await writeAsync()
     console.log('tx', tx)
@@ -34,6 +45,7 @@ export default function Home() {
       <button onClick={handleTransferTokens} disabled={isLoadingTransferTokens || isLoadingAproveToken}>
         TRANSFER TOKEN
       </button>
+      <WormholeBridge config={config} />
     </main>
   )
 }

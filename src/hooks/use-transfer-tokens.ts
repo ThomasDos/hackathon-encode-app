@@ -4,10 +4,10 @@ import { toBeHex } from 'ethers'
 import { useContractWrite, useNetwork, usePrepareContractWrite } from 'wagmi'
 
 function useTransferToken() {
-  const targetChainId = 5 // Polygon mainnet
+  const targetChainId = 2 // Goerli
   const tokenAddress = '0x7a9673cb6faeb696ac7b76f622c7933256e324d2'
 
-  const targetAddress = toBeHex('0x6D891B23C4d4Bd02270F9cb9699A42bF0eaB40c4', 32)
+  const targetAddress = toBeHex('0xcCE64F20d934f320137F84A1Adbfa8E53AAAaa4C', 32)
   console.log('targetAddress:', targetAddress)
   const { chain } = useNetwork()
   console.log('chain:', chain)
@@ -19,7 +19,7 @@ function useTransferToken() {
     address: chainEnum?.bridgeAddress ?? '',
     abi: abiBridgeWormhole,
     functionName: 'transferTokens',
-    args: [tokenAddress, 10000, targetChainId, targetAddress, 250000, 0]
+    args: [tokenAddress, 10 * 10 ** 16, targetChainId, targetAddress, 250000, 0]
   })
   const { data, isLoading, isSuccess, write, writeAsync } = useContractWrite(config)
 
