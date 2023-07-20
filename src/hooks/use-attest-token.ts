@@ -16,10 +16,11 @@ function useAttestToken(chain: Chain) {
   async function attestToken() {
     try {
       if (!vaa) {
-        await requestAttestWormhole(chain as Chain, EH_ADDRESS, receipt, setReceipt, setVaa, setSequence, sequence, vaa)
+        await requestAttestWormhole(chain as Chain, EH_ADDRESS, receipt, setReceipt, setVaa, setSequence)
+        toast.success('Token attestation completed')
       } else {
         await finaliseAttestWormholeFromTargetChain('goerli', vaa)
-        toast.success('Token attestation completed')
+        toast.success('Wrapped Token sucessfully created')
       }
     } catch (error) {
       console.log('error: ', error)

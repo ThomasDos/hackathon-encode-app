@@ -9,7 +9,6 @@ function useRedeemToken(transactionHash: string) {
   const setVaa = useTransactionsStore((state) => state.setVaa)
   const setSequence = useTransactionsStore((state) => state.setSequence)
 
-  console.log('vaa:', vaa)
   async function redeemToken() {
     try {
       if (!vaa) {

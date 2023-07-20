@@ -13,6 +13,7 @@ function CreateNewBridgeToken() {
   const [transactionHash, setTransactionHash] = useState('')
   const resetStore = useTransactionsStore((state) => state.resetStore)
   const setReceipt = useTransactionsStore((state) => state.setReceipt)
+  const receipt = useTransactionsStore((state) => state.receipt)
 
   const { attestToken } = useAttestToken(chain as Chain)
   const handleAttestToken = async () => {
@@ -54,27 +55,29 @@ function CreateNewBridgeToken() {
           </div>
         </div>
 
-        <div className='flex flex-col'>
-          <label htmlFor='token-address' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
-            Put the transaction hash of token approval
-          </label>
-          <input
-            type='text'
-            id='token-address'
-            className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
-            required
-            placeholder='0x...'
-            value={transactionHash}
-            onChange={(e) => setTransactionHash(e.target.value)}
-          />
-          <div className='flex p-10 gap-6 justify-center'>
-            <button
-              onClick={handleRetrieveReceipt}
-              className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
-              RETRIEVE RECEIPT
-            </button>
+        {!receipt && (
+          <div className='flex flex-col'>
+            <label htmlFor='token-address' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
+              Put the transaction hash of token approval
+            </label>
+            <input
+              type='text'
+              id='token-address'
+              className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+              required
+              placeholder='0x...'
+              value={transactionHash}
+              onChange={(e) => setTransactionHash(e.target.value)}
+            />
+            <div className='flex p-10 gap-6 justify-center'>
+              <button
+                onClick={handleRetrieveReceipt}
+                className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+                RETRIEVE RECEIPT
+              </button>
+            </div>
           </div>
-        </div>
+        )}
       </div>
 
       <div className='flex p-10 gap-6 justify-center'>
