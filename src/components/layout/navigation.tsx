@@ -15,7 +15,7 @@ function Navigation() {
           <Link href='/create-new-bridge-token'>Bridge ERC20</Link>
         </div>
         <div className='px-4'>
-          <Link href='/bridge'>Bridge</Link>
+          <Link href='/bridge'>Bridge Native</Link>
         </div>
         <div className='flex items-center'>
           <ConnectKitButton />
