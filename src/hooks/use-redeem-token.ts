@@ -15,6 +15,7 @@ function useRedeemToken(transactionHash: string) {
         await getRedeemTokenVaa(receipt, setVaa, setSequence)
       } else {
         await finaliseRedeemWormholeFromTargetChain('goerli', vaa)
+        toast.success('Token redeemed')
       }
     } catch (error) {
       console.log('error: ', error)

@@ -17,7 +17,7 @@ const getRedeemTokenVaa = async (
       ['https://wormhole-v2-testnet-api.certus.one'],
       10002,
       emitterAddress,
-      '336',
+      seq,
       {},
       1000,
       5

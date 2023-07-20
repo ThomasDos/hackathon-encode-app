@@ -24,7 +24,6 @@ function Admin() {
       await handleRetrieveReceipt()
     } else {
       await redeemToken()
-      toast.success('Token redeemed')
     }
   }
 
