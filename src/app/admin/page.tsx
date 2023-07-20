@@ -30,7 +30,7 @@ function Admin() {
 
   const handleRetrieveReceipt = async () => {
     if (!chain) return
-    const provider = getRpcProvider(chain?.rpcUrls.default.http[0])
+    const provider = getRpcProvider('https://rpc.sepolia.org')
     const receipt = await provider.getTransactionReceipt(transactionHash)
     setReceipt(receipt)
     toast.success('Receipt retrieved')

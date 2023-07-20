@@ -9,9 +9,7 @@ const requestAttestWormhole = async (
   receipt: any,
   setReceipt: (receipt: any) => void,
   setVaa: (vaa: any) => void,
-  setSequence: (sequence: string) => void,
-  vaa: any,
-  sequence: string
+  setSequence: (sequence: string) => void
 ) => {
   try {
     let receiptTemp = receipt
