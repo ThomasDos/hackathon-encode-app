@@ -1,22 +1,27 @@
 import finaliseRedeemWormholeFromTargetChain from '@/services/wormhole/finalise-redeem-wormhole-from-target-chain'
 import getRedeemTokenVaa from '@/services/wormhole/get-redeem-token-vaa'
+import useTransactionsStore from '@/store/transactions.store'
+import toast from 'react-hot-toast'
 
-function useRedeemToken() {
-  let vaaKey
+function useRedeemToken(transactionHash: string) {
+  const receipt = useTransactionsStore((state) => state.receipt)
+  const vaa = useTransactionsStore((state) => state.vaa)
+  const setVaa = useTransactionsStore((state) => state.setVaa)
+  const setSequence = useTransactionsStore((state) => state.setSequence)
 
   async function redeemToken() {
     try {
-      const vaa = await getRedeemTokenVaa()
-
-      console.log('vaa > ', vaa)
-
-      await finaliseRedeemWormholeFromTargetChain('goerli', vaa)
-      vaaKey = vaa
+      if (!vaa) {
+        await getRedeemTokenVaa(receipt, setVaa, setSequence)
+      } else {
+        await finaliseRedeemWormholeFromTargetChain('goerli', vaa)
+      }
     } catch (error) {
       console.log('error: ', error)
+      toast.error('something went wrong with redeeming token')
     }
   }
 
-  return { vaaKey, redeemToken }
+  return { redeemToken }
 }
 export default useRedeemToken

@@ -1,10 +1,9 @@
 import abiBridgeWormhole from '@/constant/abi-bridge-wormhole'
-import { EH_ADDRESS } from '@/constant/token-ERC20-sepolia-address'
 import WORMHOLE_CONTRACT_ADDRESSES from '@/constant/wormhole-contract-addresses'
 import { utils } from 'ethers'
 import { useContractWrite, useNetwork, usePrepareContractWrite } from 'wagmi'
 
-function useTransferToken(amount: number) {
+function useTransferToken(tokenAddress: `0x${string}`, amount: number) {
   const targetChainId = 2 // Goerli
 
   const targetAddress = utils.hexZeroPad('0xcCE64F20d934f320137F84A1Adbfa8E53AAAaa4C', 32)
@@ -15,7 +14,7 @@ function useTransferToken(amount: number) {
     address: chainEnum?.bridgeAddress ?? '',
     abi: abiBridgeWormhole,
     functionName: 'transferTokens',
-    args: [EH_ADDRESS, amount * 10 ** 18, targetChainId, targetAddress, 10000000, 0]
+    args: [tokenAddress, amount * 10 ** 18, targetChainId, targetAddress, 10000000, 0]
   })
   const { data, isLoading, isSuccess, write, writeAsync } = useContractWrite(config)
 

@@ -8,18 +8,20 @@ import toast from 'react-hot-toast'
 
 export default function Home() {
   const [tokenAmount, setTokenAmount] = useState(0)
+  const [tokenAddress, setTokenAddress] = useState('')
+
   const {
     writeAsync: writeAsyncTransferToken,
     data,
     isLoading: isLoadingTransferTokens,
     isSuccess
-  } = useTransferTokens(tokenAmount)
+  } = useTransferTokens(tokenAddress as `0x${string}`, tokenAmount)
   const {
     writeAsync: writeAsyncApproveToken,
     data: dataApproveToken,
     isSuccess: isSuccessApproveToken,
     isLoading: isLoadingAproveToken
-  } = useApproveToken()
+  } = useApproveToken(tokenAddress as `0x${string}`)
 
   const config: WormholeConnectConfig = {
     env: 'testnet',
@@ -29,17 +31,26 @@ export default function Home() {
 
   const handleApproveToken = async () => {
     if (!writeAsyncApproveToken) return
-
-    const tx = await writeAsyncApproveToken()
-    console.log('tx', tx)
-
+    if (!tokenAddress) {
+      toast.error('Please enter a token address')
+      return
+    }
+    await writeAsyncApproveToken()
     toast.success('Token approved')
   }
 
   const handleTransferTokens = async () => {
-    if (!writeAsyncTransferToken || !tokenAmount) return
-    const tx = await writeAsyncTransferToken()
-    console.log('tx', tx)
+    if (!writeAsyncTransferToken) return
+    if (!tokenAddress) {
+      toast.error('Please enter a token address')
+      return
+    }
+    if (!tokenAmount) {
+      toast.error('Please enter a token amount')
+      return
+    }
+
+    await writeAsyncTransferToken()
     toast.success('Token transfered')
   }
 
@@ -50,6 +61,21 @@ export default function Home() {
       <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative' role='alert'>
         <strong className='font-bold'>Proceed carefully!</strong>
         <span className='block sm:inline'> Please make sure that you have correctly attest your token first.</span>
+      </div>
+
+      <div className='flex flex-col my-10'>
+        <label htmlFor='token-address' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
+          Put the address of tokens you want to transfer
+        </label>
+        <input
+          type='text'
+          id='token-address'
+          className='bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500'
+          required
+          placeholder='0x...'
+          value={tokenAddress}
+          onChange={(e) => setTokenAddress(e.target.value)}
+        />
       </div>
 
       <div className='flex p-10 gap-6 justify-center'>

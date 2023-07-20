@@ -1,15 +1,17 @@
-import { getEmitterAddressEth, getSignedVAAWithRetry } from '@certusone/wormhole-sdk'
+import { getEmitterAddressEth, getSignedVAAWithRetry, parseSequenceFromLogEth } from '@certusone/wormhole-sdk'
+import toast from 'react-hot-toast'
 
-const getRedeemTokenVaa = async () => {
+const getRedeemTokenVaa = async (
+  receipt: any,
+  setVaa: (receipt: any) => void,
+  setSequence: (sequence: string) => void
+) => {
   try {
-    // const rc = mockReceiptTransferToken
-    // console.log('rc:', rc)
+    if (!receipt) return null
 
-    // const seq = parseSequenceFromLogEth(rc as any, '0x4a8bc80Ed5a4067f1CCf107057b8270E0cC11A78')
-    // console.log('seq:', seq)
-    //336
+    const seq = parseSequenceFromLogEth(receipt as any, '0x4a8bc80Ed5a4067f1CCf107057b8270E0cC11A78')
+    setSequence(seq)
     const emitterAddress = getEmitterAddressEth('0xDB5492265f6038831E89f495670FF909aDe94bd9')
-    // const chainId = WORMHOLE_CONTRACT_ADDRESSES[chain.network as keyof typeof WORMHOLE_CONTRACT_ADDRESSES].chainId
 
     const attestationVaa = await getSignedVAAWithRetry(
       ['https://wormhole-v2-testnet-api.certus.one'],
@@ -21,8 +23,8 @@ const getRedeemTokenVaa = async () => {
       5
     )
 
-    console.log('<<<<<<<<<<<<<attestationVaa>>>>>>>>>>', attestationVaa)
-
+    setVaa(attestationVaa)
+    toast.success('VAA retrieved successfully')
     return attestationVaa
   } catch (error) {
     console.log('error: ', error)
