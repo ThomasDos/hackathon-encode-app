@@ -13,6 +13,7 @@ function Admin() {
   const { redeemToken } = useRedeemToken(transactionHash)
   const receipt = useTransactionsStore((state) => state.receipt)
   const setReceipt = useTransactionsStore((state) => state.setReceipt)
+  const resetStore = useTransactionsStore((state) => state.resetStore)
 
   const handleRequestToken = async () => {
     if (!transactionHash) {
@@ -64,6 +65,14 @@ function Admin() {
               REDEEM TOKEN
             </button>
           </div>
+        </div>
+
+        <div className='flex p-10 gap-6 justify-center'>
+          <button
+            onClick={() => resetStore()}
+            className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+            RESET FLOW
+          </button>
         </div>
       </div>
     </main>

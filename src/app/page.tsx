@@ -2,6 +2,7 @@
 
 import useApproveToken from '@/hooks/use-approve-token'
 import useTransferTokens from '@/hooks/use-transfer-tokens'
+import useTransactionsStore from '@/store/transactions.store'
 import { WormholeConnectConfig } from '@wormhole-foundation/wormhole-connect'
 import { useState } from 'react'
 import toast from 'react-hot-toast'
@@ -22,6 +23,8 @@ export default function Home() {
     isSuccess: isSuccessApproveToken,
     isLoading: isLoadingAproveToken
   } = useApproveToken(tokenAddress as `0x${string}`)
+
+  const resetStore = useTransactionsStore((state) => state.resetStore)
 
   const config: WormholeConnectConfig = {
     env: 'testnet',
@@ -106,6 +109,14 @@ export default function Home() {
           value={tokenAmount}
           onChange={(e) => setTokenAmount(Number(e.target.value))}
         />
+      </div>
+
+      <div className='flex p-10 gap-6 justify-center'>
+        <button
+          onClick={() => resetStore()}
+          className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'>
+          RESET FLOW
+        </button>
       </div>
     </main>
   )
