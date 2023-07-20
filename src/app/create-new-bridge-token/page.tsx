@@ -28,6 +28,7 @@ function CreateNewBridgeToken() {
   }
   return (
     <main className='flex flex-col items-center'>
+      <h1 className='text-xl'>Create the Bridge for my ERC20 TOKEN</h1>
       <div className='bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative my-5' role='alert'>
         <strong className='font-bold'>Temporarly!</strong>
         <span className='block sm:inline'> Bridge will be made from Sepolia to Goerli testnet for demo purpose.</span>
