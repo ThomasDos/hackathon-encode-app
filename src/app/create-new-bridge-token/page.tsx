@@ -35,7 +35,7 @@ function CreateNewBridgeToken() {
       </div>
       <div className='flex gap-5'>
         <div className='flex flex-col'>
-          <label htmlFor='token-address' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
+          <label htmlFor='token-address' className='block mb-2 text-sm font-medium '>
             Put the address of tokens you want to attest
           </label>
           <input
@@ -58,7 +58,7 @@ function CreateNewBridgeToken() {
 
         {!receipt && (
           <div className='flex flex-col'>
-            <label htmlFor='token-receipt' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
+            <label htmlFor='token-receipt' className='block mb-2 text-sm font-medium '>
               Put the transaction hash of token approval
             </label>
             <input

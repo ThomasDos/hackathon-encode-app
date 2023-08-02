@@ -46,7 +46,7 @@ function Admin() {
           </span>
         </div>
         <div className='flex flex-col'>
-          <label htmlFor='token-redeem' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
+          <label htmlFor='token-redeem' className='block mb-2 text-sm font-medium '>
             Put the transaction hash of token to redeem
           </label>
           <input

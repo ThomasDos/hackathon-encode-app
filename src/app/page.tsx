@@ -92,7 +92,7 @@ export default function Home() {
       </div>
 
       <div className='flex flex-col my-10'>
-        <label htmlFor='token-address' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
+        <label htmlFor='token-address' className='block mb-2 text-sm font-medium '>
           Put the address of tokens you want to transfer
         </label>
         <input
@@ -107,7 +107,7 @@ export default function Home() {
       </div>
 
       <div>
-        <label htmlFor='token-amount' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
+        <label htmlFor='token-amount' className='block mb-2 text-sm font-medium '>
           Put the amount of tokens you want to transfer
         </label>
         <input
@@ -122,7 +122,7 @@ export default function Home() {
       </div>
 
       <div className='my-5'>
-        <label htmlFor='sponsor' className='block mb-2 text-sm font-medium text-gray-900 dark:text-white'>
+        <label htmlFor='sponsor' className='block mb-2 text-sm font-medium '>
           Please enter the sponsor name
         </label>
         <input
